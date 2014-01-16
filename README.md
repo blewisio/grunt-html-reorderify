@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # grunt-html-reorderify
 
 > Reorder HTML attributes such as id, class, or style into a standard order.
@@ -88,9 +87,3 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 _(Nothing yet)_
-=======
-Html-Reorderify
-===============
-
-Reorder HTML attributes such as id, class, or style into a standard order.
->>>>>>> 59f830cb5aa0e4faaca96bcffe27da8859537a90
