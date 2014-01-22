@@ -30,20 +30,12 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     html_reorderify: {
-      default_options: {
+      test: {
         options: {
+        
         },
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
+          'test/actual/simple_no_change.html' : ['test/acceptance/simple_no_change.html'],
         },
       },
     },
@@ -63,11 +55,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
+  grunt.registerTask('default', ['html_reorderify:test']);
+  
   grunt.registerTask('test', ['clean', 'html_reorderify', 'nodeunit']);
 
-  // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('jshint', ['jshint', 'test']);
 
 };
