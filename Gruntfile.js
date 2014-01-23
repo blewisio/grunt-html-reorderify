@@ -34,9 +34,11 @@ module.exports = function(grunt) {
         options: {
         
         },
-        files: {
-          'test/actual/simple_no_change.html' : ['test/acceptance/simple_no_change.html'],
-        },
+        files: [{
+          // src: ['**/*.html'],
+          src: ['test/acceptance/simple_two_attribute_swap.html'],
+          dest: 'test/actual/simple_two_attribute_swap.html',
+        }],
       },
     },
 
