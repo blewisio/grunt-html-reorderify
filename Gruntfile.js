@@ -61,6 +61,8 @@ module.exports = function(grunt) {
   
   grunt.registerTask('test', ['clean', 'html_reorderify', 'nodeunit']);
 
+  grunt.registerTask('nodeunit2', ['nodeunit']);
+
   grunt.registerTask('jshint', ['jshint', 'test']);
 
 };

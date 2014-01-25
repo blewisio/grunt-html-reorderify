@@ -8,7 +8,24 @@
 
 'use strict';
 
-function reorderAttributes(src, options) {
+var html_reorderify = module.exports = function(grunt) {
+  grunt.registerMultiTask('html_reorderify', 'Reorder HTML attributes such as id, class, or style into a standard order.', function() {
+    debugger;
+    
+    var options = grunt.config.get('html_reorderify.test.options');
+
+    var src = this.files[0].orig.src[0];
+    if (grunt.file.exists(src)) {
+      src = grunt.file.read(src);
+      src = html_reorderify.reorderAttributes(src, options);
+      grunt.file.write(this.files[0].dest, src);
+    } else {
+      grunt.log.warn('File "' + src + '" does not exist.');
+    }
+  });
+};
+
+html_reorderify.reorderAttributes = function(src, options) {
   var i,
       tagBeginIndex = null,
       tagEndIndex = null;
@@ -55,30 +72,13 @@ function reorderAttributes(src, options) {
     }
   }
   return src;
-}
-
-module.exports = function(grunt) {
-
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
-
-  grunt.registerMultiTask('html_reorderify', 'Reorder HTML attributes such as id, class, or style into a standard order.', function() {
-    debugger;
-    
-    var options = grunt.config.get('html_reorderify.test.options');
-
-    var src = this.files[0].orig.src[0];
-    if (grunt.file.exists(src)) {
-      src = grunt.file.read(src);
-      src = reorderAttributes(src, options);
-      grunt.file.write(this.files[0].dest, src);
-    } else {
-      grunt.log.warn('File "' + src + '" does not exist.');
-    }
-  });
 };
 
-function replaceSpacesInQuotes(quote) {
+html_reorderify.testFunction = function() {
+  return 5;
+};
+
+html_reorderify.replaceSpacesInQuotes = function(quote) {
 // var j,
 //     quoteBeginIndex = null,
 //     quoteEndIndex = null;
@@ -95,4 +95,4 @@ function replaceSpacesInQuotes(quote) {
 //     }
 //   }
 // }
-}
+};
