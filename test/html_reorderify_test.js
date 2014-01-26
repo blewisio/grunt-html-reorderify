@@ -27,21 +27,24 @@ exports.html_reorderify = {
     // setup here if necessary
     done();
   },
-  default_options: function(test) {
-    test.expect(1);
-
-    // var actual = grunt.file.read('tmp/default_options');
-    // var expected = grunt.file.read('test/expected/default_options');
-    // test.equal(actual, expected, 'should describe what the default behavior is.');
-    test.equal(1, 1, '');
-    test.done();
-  },
   test_testFunction: function(test) {
     test.expect(1);
+    
     var actual = html_reorderify.testFunction();
     var expected = 5;
+    
     test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
-    // test.equal(true, true, 'should describe what the custom option(s) behavior is.');
+    test.done();
+  },
+  test_getEachAttribute: function(test) {
+    test.expect(1);
+
+    var options = { left: ['id'] };
+    var attributes = ['id="testId"'];// class="testClass" style="display: none;"'
+    var actual = html_reorderify.getEachAttribute(attributes, options);
+    var expected = [ {name: 'id', value: '"testId"', order: 0}];
+
+    test.deepEqual(actual, expected, 'should do something fill this in later_');
     test.done();
   },
 };

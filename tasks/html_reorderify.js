@@ -18,7 +18,8 @@ var html_reorderify = module.exports = function(grunt) {
     if (grunt.file.exists(src)) {
       src = grunt.file.read(src);
       src = html_reorderify.reorderAttributes(src, options);
-      grunt.file.write(this.files[0].dest, src);
+      var dest = this.files[0].dest;
+      grunt.file.write(dest, src);
     } else {
       grunt.log.warn('File "' + src + '" does not exist.');
     }
@@ -45,17 +46,7 @@ html_reorderify.reorderAttributes = function(src, options) {
         var element = originalElement.substring(originalElement.indexOf(' ') + 1);
         var attributes = element.split(' ');
         if (attributes.length > 1) {
-          var keyValuePairs = [];
-          var k;
-          for(k = 0; k < attributes.length; k++) {
-            var pair = attributes[k].split('=');
-            var obj = {
-                        'name': pair[0],
-                        'value': pair[1],
-                        'order': options.left.indexOf(pair[0])
-                      };
-            keyValuePairs.push(obj);
-          }
+          var keyValuePairs = html_reorderify.getEachAttribute(attributes, options);
           keyValuePairs.sort(function (a, b) {
             return a.order - b.order;
           });
@@ -74,11 +65,27 @@ html_reorderify.reorderAttributes = function(src, options) {
   return src;
 };
 
+html_reorderify.getEachAttribute = function(attributes, options) {
+  var keyValuePairs = [];
+  var k;
+  for(k = 0; k < attributes.length; k++) {
+    var pair = attributes[k].split('=');
+    var obj = {
+                'name': pair[0],
+                'value': pair[1],
+                'order': options.left.indexOf(pair[0])
+              };
+    obj.order = obj.order === -1 ? 999 : obj.order;
+    keyValuePairs.push(obj);
+  }
+  return keyValuePairs;
+};
+
 html_reorderify.testFunction = function() {
   return 5;
 };
 
-html_reorderify.replaceSpacesInQuotes = function(quote) {
+// html_reorderify.replaceSpacesInQuotes = function(quote) {
 // var j,
 //     quoteBeginIndex = null,
 //     quoteEndIndex = null;
@@ -95,4 +102,4 @@ html_reorderify.replaceSpacesInQuotes = function(quote) {
 //     }
 //   }
 // }
-};
+// };
