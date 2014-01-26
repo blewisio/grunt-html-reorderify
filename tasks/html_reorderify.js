@@ -10,7 +10,7 @@
 
 var html_reorderify = module.exports = function(grunt) {
   grunt.registerMultiTask('html_reorderify', 'Reorder HTML attributes such as id, class, or style into a standard order.', function() {
-    debugger;
+    // debugger; // uncomment to debug via node-inspector
     
     var options = grunt.config.get('html_reorderify.default.options');
 
@@ -30,6 +30,7 @@ html_reorderify.reorderAttributes = function(src, options) {
   var i,
       tagBeginIndex = null,
       tagEndIndex = null;
+
   for (i = 0; i < src.length; i++) {
     if (tagBeginIndex === null) {
       if (src[i] === '<') {
@@ -42,19 +43,14 @@ html_reorderify.reorderAttributes = function(src, options) {
     } else {
       var originalElement = src.substring(tagBeginIndex + 1, tagEndIndex);
       if (originalElement[0] !== '/') {
-        var elementName = originalElement.substring(0, originalElement.indexOf(' '));
-        var element = originalElement.substring(originalElement.indexOf(' ') + 1);
-        var attributes = element.split(' ');
+        var elementName = originalElement.substring(0, originalElement.indexOf(' ')),
+            element = originalElement.substring(originalElement.indexOf(' ') + 1),
+            attributes = element.split(' ');
+
         if (attributes.length > 1) {
-          var keyValuePairs = html_reorderify.getEachAttribute(attributes, options);
-          keyValuePairs.sort(function (a, b) {
-            return a.order - b.order;
-          });
-          var orderedElement = elementName;
-          var m;
-          for(m = 0; m < keyValuePairs.length; m++) {
-            orderedElement = orderedElement + ' ' + keyValuePairs[m].name + '=' + keyValuePairs[m].value;
-          }
+          var unsortedAttributes = html_reorderify.getEachAttribute(attributes, options);
+          var sortedAttributes = html_reorderify.sortAttributes(unsortedAttributes);
+          var orderedElement = html_reorderify.rebuildElement(elementName, sortedAttributes);
           src = src.replace(originalElement, orderedElement);
         }
       }
@@ -66,8 +62,8 @@ html_reorderify.reorderAttributes = function(src, options) {
 };
 
 html_reorderify.getEachAttribute = function(attributes, options) {
-  var keyValuePairs = [];
-  var k;
+  var keyValuePairs = [],
+      k;
   for(k = 0; k < attributes.length; k++) {
     var pair = attributes[k].split('=');
     var obj = {
@@ -79,6 +75,20 @@ html_reorderify.getEachAttribute = function(attributes, options) {
     keyValuePairs.push(obj);
   }
   return keyValuePairs;
+};
+
+html_reorderify.sortAttributes = function(unsorted) {
+  return unsorted.sort(function (a, b) {
+    return a.order - b.order;
+  });
+};
+
+html_reorderify.rebuildElement = function(element, keyValuePairs) {
+  var m;
+  for(m = 0; m < keyValuePairs.length; m++) {
+    element += ' ' + keyValuePairs[m].name + '=' + keyValuePairs[m].value;
+  }
+  return element;
 };
 
 html_reorderify.testFunction = function() {

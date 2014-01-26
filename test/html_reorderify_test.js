@@ -38,16 +38,15 @@ function getExpectedAttributes(names, values, orders) {
 
 exports.html_reorderify = {
   setUp: function(done) {
-    // setup here if necessary
     done();
   },
-  test_testFunction: function(test) {
+  test_test: function(test) {
     test.expect(1);
     
     var actual = html_reorderify.testFunction();
     var expected = 5;
     
-    test.equal(actual, expected, 'should describe an example test.');
+    test.equal(actual, expected, 'Should describe an example test.');
     test.done();
   },
   test_getEachAttribute_single: function(test) {
@@ -58,7 +57,7 @@ exports.html_reorderify = {
     var actual = html_reorderify.getEachAttribute(attributes, options);
     var expected = [{name: 'id', value: '"testId"', order: 0}];
 
-    test.deepEqual(actual, expected, 'should do something fill this in later');
+    test.deepEqual(actual, expected, 'Should do something fill this in later');
     test.done();
   },
   test_getEachAttribute_double: function(test) {
@@ -69,7 +68,7 @@ exports.html_reorderify = {
     var actual = html_reorderify.getEachAttribute(attributes, options);
     var expected = getExpectedAttributes(['id', 'class'], ['"testId"', '"testClass"'], [0, 1]);
 
-    test.deepEqual(actual, expected, 'should do something fill this in later');
+    test.deepEqual(actual, expected, 'Should do something fill this in later');
     test.done();
   },
   test_getEachAttribute_triple: function(test) {
@@ -80,7 +79,7 @@ exports.html_reorderify = {
     var actual = html_reorderify.getEachAttribute(attributes, options);
     var expected = getExpectedAttributes(['id', 'class', 'style'], ['"testId"', '"testClass"', '"display: none;"'], [0, 1, 2]);
 
-    test.deepEqual(actual, expected, 'should do something fill this in later');
+    test.deepEqual(actual, expected, 'Should do something fill this in later');
     test.done();
   },
   test_getEachAttribute_missing_from_options: function(test) {
@@ -107,6 +106,16 @@ exports.html_reorderify = {
     var actual = html_reorderify.getEachAttribute(attributes, options);
 
     test.equal(attributes.length, actual.length, 'Should output the same number of attributes as passed in');
+    test.done();
+  },
+  test_rebuildElement_simple: function(test) {
+    test.expect(1);
+
+    var keyValuePairs = getExpectedAttributes(['id'], ['"testId"'], [0]);
+    var actual = html_reorderify.rebuildElement('div', keyValuePairs);
+    var expected = 'div id="testId"';
+
+    test.equal(actual, expected, 'Should la dee da da skebop do wap');
     test.done();
   },
 };
