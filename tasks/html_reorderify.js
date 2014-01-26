@@ -12,7 +12,7 @@ var html_reorderify = module.exports = function(grunt) {
   grunt.registerMultiTask('html_reorderify', 'Reorder HTML attributes such as id, class, or style into a standard order.', function() {
     debugger;
     
-    var options = grunt.config.get('html_reorderify.test.options');
+    var options = grunt.config.get('html_reorderify.default.options');
 
     var src = this.files[0].orig.src[0];
     if (grunt.file.exists(src)) {
@@ -75,7 +75,7 @@ html_reorderify.getEachAttribute = function(attributes, options) {
                 'value': pair[1],
                 'order': options.left.indexOf(pair[0])
               };
-    obj.order = obj.order === -1 ? 999 : obj.order;
+    obj.order = obj.order === -1 ? attributes.length + k : obj.order;
     keyValuePairs.push(obj);
   }
   return keyValuePairs;

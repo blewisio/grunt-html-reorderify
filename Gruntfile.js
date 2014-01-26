@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     html_reorderify: {
-      test: {
+      default: {
         options: {
           left: ['id', 'class'],
         },
@@ -57,11 +57,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
-  grunt.registerTask('default', ['html_reorderify:test']);
+  grunt.registerTask('default', ['html_reorderify:default']);
   
   grunt.registerTask('test', ['clean', 'html_reorderify', 'nodeunit']);
 
-  grunt.registerTask('nodeunit2', ['nodeunit']);
+  grunt.registerTask('unittest', ['nodeunit']);
 
   grunt.registerTask('jshint', ['jshint', 'test']);
 
