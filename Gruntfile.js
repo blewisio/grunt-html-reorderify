@@ -47,6 +47,13 @@ module.exports = function(grunt) {
       tests: ['test/*_test.js'],
     },
 
+    watch: {
+      scripts: {
+        files: 'test/html_reorderify_test.js',
+        tasks: ['unittest'],
+      },
+    },
+
   });
 
   // Actually load this plugin's task(s).
@@ -56,13 +63,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('default', ['html_reorderify:default']);
-  
   grunt.registerTask('test', ['clean', 'html_reorderify', 'nodeunit']);
-
   grunt.registerTask('unittest', ['nodeunit']);
-
   grunt.registerTask('jshint', ['jshint', 'test']);
 
 };
