@@ -66,12 +66,7 @@ html_reorderify.getEachAttribute = function(attributes, options) {
       k;
   for(k = 0; k < attributes.length; k++) {
     var pair = attributes[k].split('=');
-    var obj = {
-                'name': pair[0],
-                'value': pair[1],
-                'order': options.left.indexOf(pair[0])
-              };
-    obj.order = obj.order === -1 ? attributes.length + k : obj.order;
+    var obj = html_reorderify.buildSortableAttribute(pair, options, attributes.length + k);
     keyValuePairs.push(obj);
   }
   return keyValuePairs;
@@ -89,6 +84,15 @@ html_reorderify.rebuildElement = function(element, keyValuePairs) {
     element += ' ' + keyValuePairs[m].name + '=' + keyValuePairs[m].value;
   }
   return element;
+};
+
+html_reorderify.buildSortableAttribute = function(keyValuePair, options, maxOrder) {
+  var foundIndex = options.left.indexOf(keyValuePair[0]);
+  return {
+            'name': keyValuePair[0],
+            'value': keyValuePair[1],
+            'order': foundIndex === -1 ? maxOrder : foundIndex
+         };
 };
 
 html_reorderify.testFunction = function() {

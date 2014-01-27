@@ -108,14 +108,48 @@ exports.html_reorderify = {
     test.equal(attributes.length, actual.length, 'Should output the same number of attributes as passed in');
     test.done();
   },
-  test_rebuildElement_simple: function(test) {
+  test_rebuildElement_single: function(test) {
     test.expect(1);
 
-    var keyValuePairs = getExpectedAttributes(['id'], ['"testId"'], [0]);
-    var actual = html_reorderify.rebuildElement('div', keyValuePairs);
+    var attributes = getExpectedAttributes(['id'], ['"testId"'], [0]);
+    var actual = html_reorderify.rebuildElement('div', attributes);
     var expected = 'div id="testId"';
 
     test.equal(actual, expected, 'Should la dee da da skebop do wap');
+    test.done();
+  },
+  test_rebuildElement_double: function(test) {
+    test.expect(1);
+
+    var attributes = getExpectedAttributes(['id', 'class'], ['"testId"', '"testClass"'], [0, 1]);
+    var actual = html_reorderify.rebuildElement('div', attributes);
+    var expected = 'div id="testId" class="testClass"';
+
+    test.equal(actual, expected, 'Should should should should should');
+    test.done();
+  },
+  test_rebuildElement_triple: function(test) {
+    test.expect(1);
+
+    var attributes = getExpectedAttributes(['id', 'class', 'style'], ['"testId"', '"testClass1 testClass2"', '"font-size: 1.25em;"'], [0, 1, 2]);
+    var actual = html_reorderify.rebuildElement('span', attributes);
+    var expected = 'span id="testId" class="testClass1 testClass2" style="font-size: 1.25em;"';
+
+    test.equal(actual, expected, 'Should should should should should');
+    test.done();
+  },
+  test_sortAttributes: function(test) {
+    test.expect(1);
+
+    var actual = html_reorderify.sortAttributes([{order: 3}, {order: 2}, {order: 0}, {order: 1}]);
+    var expected = [{order: 0}, {order: 1}, {order: 2}, {order: 3}];
+
+    test.deepEqual(actual, expected, 'Should sort correctly...');
+    test.done();
+  },
+  test_buildSortableAttribute: function(test) {
+    test.expect(1);
+    test.equal(1, 1, '');
     test.done();
   },
 };
