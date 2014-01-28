@@ -45,7 +45,7 @@ html_reorderify.reorderAttributes = function(src, options) {
       if (originalElement[0] !== '/') {
         var elementName = originalElement.substring(0, originalElement.indexOf(' ')),
             element = originalElement.substring(originalElement.indexOf(' ') + 1),
-            attributes = element.split(' ');
+            attributes = html_reorderify.getAttributesFromElement(element);
 
         if (attributes.length > 1) {
           var unsortedAttributes = html_reorderify.getEachAttribute(attributes, options);
@@ -59,6 +59,10 @@ html_reorderify.reorderAttributes = function(src, options) {
     }
   }
   return src;
+};
+
+html_reorderify.getAttributesFromElement = function(element) {
+  return element.split(' ');
 };
 
 html_reorderify.getEachAttribute = function(attributes, options) {

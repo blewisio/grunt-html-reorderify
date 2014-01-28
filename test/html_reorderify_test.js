@@ -158,4 +158,14 @@ exports.html_reorderify = {
     test.deepEqual(actual, expected, 'Should build correctly am I right');
     test.done();
   },
+  test_getAttributesFromElement: function(test) {
+    test.expect(1);
+
+    var element = 'id="testId" class="testClass"';
+    var actual = html_reorderify.getAttributesFromElement(element);
+    var expected = ['id="testId"', 'class="testClass"'];
+
+    test.deepEqual(actual, expected, 'Should be deep equal');
+    test.done();
+  },
 };
