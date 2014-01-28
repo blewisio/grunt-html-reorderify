@@ -149,7 +149,13 @@ exports.html_reorderify = {
   },
   test_buildSortableAttribute: function(test) {
     test.expect(1);
-    test.equal(1, 1, '');
+
+    var options = {left: 'id'};
+    var maxOrder = 3;
+    var actual = html_reorderify.buildSortableAttribute(['class', '"testClass"'], options, maxOrder);
+    var expected = {name: 'class', value: '"testClass"', order: maxOrder};
+
+    test.deepEqual(actual, expected, 'Should build correctly am I right');
     test.done();
   },
 };
