@@ -158,7 +158,17 @@ exports.html_reorderify = {
     test.deepEqual(actual, expected, 'Should build correctly am I right');
     test.done();
   },
-  test_getAttributesFromElement: function(test) {
+  test_getAttributesFromElement_single: function(test) {
+    test.expect(1);
+
+    var element = 'class="testClass"';
+    var actual = html_reorderify.getAttributesFromElement(element);
+    var expected = ['class="testClass"'];
+
+    test.deepEqual(actual, expected, 'Should be deep equal');
+    test.done();
+  },
+  test_getAttributesFromElement_simple: function(test) {
     test.expect(1);
 
     var element = 'id="testId" class="testClass"';
@@ -166,6 +176,46 @@ exports.html_reorderify = {
     var expected = ['id="testId"', 'class="testClass"'];
 
     test.deepEqual(actual, expected, 'Should be deep equal');
+    test.done();
+  },
+  test_getAttributesFromElement_with_spaces: function(test) {
+    test.expect(1);
+
+    var element = 'id="testId" class="testClass1 testClass2"';
+    var actual = html_reorderify.getAttributesFromElement(element);
+    var expected = ['id="testId"', 'class="testClass1 testClass2"'];
+
+    test.deepEqual(actual, expected, 'Should still be deep equal');
+    test.done();
+  },
+  test_getAttributesFromElement_complex: function(test) {
+    test.expect(1);
+
+    var element = 'id="testId" class="testClass1 testClass2 testClass3" style="margin-left: 0; margin-right: 0;"';
+    var actual = html_reorderify.getAttributesFromElement(element);
+    var expected = ['id="testId"', 'class="testClass1 testClass2 testClass3"', 'style="margin-left: 0; margin-right: 0;"'];
+
+    test.deepEqual(actual, expected, 'Should still be deep equal 2');
+    test.done();
+  },
+  test_getAttributesFromElement_trailingSpace: function(test) {
+    test.expect(1);
+
+    var element = 'id="testId" class="testClass1 testClass2" style="margin-left: 0;"  ';
+    var actual = html_reorderify.getAttributesFromElement(element);
+    var expected = ['id="testId"', 'class="testClass1 testClass2"', 'style="margin-left: 0;"'];
+
+    test.deepEqual(actual, expected, 'Should');
+    test.done();
+  },
+  test_getAttributesFromElement_equalsInMiddle: function(test) {
+    test.expect(1);
+
+    var element = 'http-equiv="X-UA-Compatible" content="IE=edge"';
+    var actual = html_reorderify.getAttributesFromElement(element);
+    var expected = ['http-equiv="X-UA-Compatible"', 'content="IE=edge"'];
+
+    test.deepEqual(actual, expected, 'Should work with equals sign in an attribute value');
     test.done();
   },
 };

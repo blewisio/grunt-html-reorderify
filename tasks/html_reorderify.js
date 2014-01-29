@@ -39,6 +39,9 @@ html_reorderify.reorderAttributes = function(src, options) {
     } else if (tagEndIndex === null) {
       if (src[i] === '>') {
         tagEndIndex = i;
+        if (src[i-1] === '/' && src[i-2] === ' ') {
+          tagEndIndex -= 2;
+        }
       }
     } else {
       var originalElement = src.substring(tagBeginIndex + 1, tagEndIndex);
@@ -62,14 +65,61 @@ html_reorderify.reorderAttributes = function(src, options) {
 };
 
 html_reorderify.getAttributesFromElement = function(element) {
-  return element.split(' ');
+  var attributes = [],
+      j,
+      equalsFound,
+      attributeName,
+      attributeValue,
+      quoteBeginIndex = null,
+      quoteEndIndex = null;
+
+  function reset() {
+    equalsFound = false;
+    attributeName = '';
+    attributeValue = '';
+  }
+
+  reset();
+
+  for (j = 0; j < element.length; j++) {
+    var symbol = element[j];
+    if (!equalsFound && symbol !== '=') {         // first get attribute name up to equals
+      attributeName += symbol;
+    } else if (!equalsFound && symbol === '=') {  // then mark equals
+      equalsFound = true;
+    } else if (!quoteBeginIndex && symbol === '"') { // then find first quote
+      quoteBeginIndex = j;
+      attributeValue += symbol;
+    } else if (symbol === '"') {                  // then find last quote
+      quoteBeginIndex = null;
+      quoteEndIndex = null;
+      attributeValue += symbol;
+      if (j === element.length - 1) {
+        attributes.push(attributeName + '=' + attributeValue);
+      }
+    } else if (quoteBeginIndex && !quoteEndIndex) {
+      attributeValue += symbol;
+    } else if (symbol === ' ') {                  // space found, move on to next attribute - DEPRECATED?
+      attributes.push(attributeName + '=' + attributeValue);
+      reset();
+    } else if (j === element.length - 1) {        // end of element found, add final character
+      attributeValue += symbol;
+      attributes.push(attributeName + '=' + attributeValue);
+      reset();
+    } else {                                      // add to value, name and equals already found
+      attributeValue += symbol;
+    }
+  }
+  return attributes;
 };
 
 html_reorderify.getEachAttribute = function(attributes, options) {
   var keyValuePairs = [],
       k;
   for(k = 0; k < attributes.length; k++) {
-    var pair = attributes[k].split('=');
+    var attribute = attributes[k];
+    var firstEqualsIndex = attribute.indexOf('=');
+    var pair = [attribute.substring(0, firstEqualsIndex), attribute.substring(firstEqualsIndex + 1, attribute.length)];
     var obj = html_reorderify.buildSortableAttribute(pair, options, attributes.length + k);
     keyValuePairs.push(obj);
   }
@@ -102,22 +152,3 @@ html_reorderify.buildSortableAttribute = function(keyValuePair, options, maxOrde
 html_reorderify.testFunction = function() {
   return 5;
 };
-
-// html_reorderify.replaceSpacesInQuotes = function(quote) {
-// var j,
-//     quoteBeginIndex = null,
-//     quoteEndIndex = null;
-// for (j = 0; j < element.length; j++) {
-//   if (quoteBeginIndex === null) {
-//     if (element[j] === '\'' || element[j] === '"') {
-//       quoteBeginIndex = j;
-//     } else if (quoteEndIndex === null) {
-//       if (element[j] === '\'' || element[j] === '"') {
-//         quoteBeginIndex = null;
-//       } else if (element[j] === ' ') {
-//         element[j] = '^';
-//       }
-//     }
-//   }
-// }
-// };
