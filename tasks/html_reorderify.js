@@ -141,7 +141,7 @@ html_reorderify.rebuildElement = function(element, keyValuePairs) {
 };
 
 html_reorderify.buildSortableAttribute = function(keyValuePair, options, maxOrder) {
-  var foundIndex = options.left.indexOf(keyValuePair[0]);
+  var foundIndex = options.first.indexOf(keyValuePair[0]);
   return {
             'name': keyValuePair[0],
             'value': keyValuePair[1],

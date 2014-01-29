@@ -52,7 +52,7 @@ exports.html_reorderify = {
   test_getEachAttribute_single: function(test) {
     test.expect(1);
 
-    var options = {left: ['id']};
+    var options = {first: ['id']};
     var attributes = ['id="testId"'];// class="testClass" style="display: none;"'
     var actual = html_reorderify.getEachAttribute(attributes, options);
     var expected = [{name: 'id', value: '"testId"', order: 0}];
@@ -63,7 +63,7 @@ exports.html_reorderify = {
   test_getEachAttribute_double: function(test) {
     test.expect(1);
 
-    var options = {left: ['id', 'class']};
+    var options = {first: ['id', 'class']};
     var attributes = ['id="testId"', 'class="testClass"'];
     var actual = html_reorderify.getEachAttribute(attributes, options);
     var expected = getExpectedAttributes(['id', 'class'], ['"testId"', '"testClass"'], [0, 1]);
@@ -74,7 +74,7 @@ exports.html_reorderify = {
   test_getEachAttribute_triple: function(test) {
     test.expect(1);
 
-    var options = {left: ['id', 'class', 'style']};
+    var options = {first: ['id', 'class', 'style']};
     var attributes = ['id="testId"', 'class="testClass"', 'style="display: none;"'];
     var actual = html_reorderify.getEachAttribute(attributes, options);
     var expected = getExpectedAttributes(['id', 'class', 'style'], ['"testId"', '"testClass"', '"display: none;"'], [0, 1, 2]);
@@ -85,7 +85,7 @@ exports.html_reorderify = {
   test_getEachAttribute_missing_from_options: function(test) {
     test.expect(2);
 
-    var options = {left: ['id']};
+    var options = {first: ['id']};
     var attributes = ['id="testId"', 'class="testClass"', 'style="display: none;"'];
     var actual = html_reorderify.getEachAttribute(attributes, options);
     
@@ -101,7 +101,7 @@ exports.html_reorderify = {
   test_getEachAttribute_preserve_number_of_attributes: function(test) {
     test.expect(1);
 
-    var options = {left: ['id']};
+    var options = {first: ['id']};
     var attributes = ['id="testId"', 'class="testClass"', 'style="display: none;"', 'data-bind="visible: isVisible"'];
     var actual = html_reorderify.getEachAttribute(attributes, options);
 
@@ -150,7 +150,7 @@ exports.html_reorderify = {
   test_buildSortableAttribute: function(test) {
     test.expect(1);
 
-    var options = {left: 'id'};
+    var options = {first: 'id'};
     var maxOrder = 3;
     var actual = html_reorderify.buildSortableAttribute(['class', '"testClass"'], options, maxOrder);
     var expected = {name: 'class', value: '"testClass"', order: maxOrder};

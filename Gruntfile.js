@@ -32,7 +32,7 @@ module.exports = function(grunt) {
     html_reorderify: {
       default: {
         options: {
-          left: ['id', 'class', 'rel', 'type', 'title', 'href'],
+          first: ['id', 'class', 'rel', 'type', 'title', 'href'],
         },
         files: [{
           // src: ['**/*.html'],
