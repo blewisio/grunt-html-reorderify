@@ -2,22 +2,22 @@
   "name": "grunt-html-reorderify",
   "description": "Reorder HTML attributes such as id, class, or style into a standard order.",
   "version": "0.1.0",
-  "homepage": "https://github.com/blewis008/html-reorderify",
+  "homepage": "https://github.com/blewis008/grunt-html-reorderify",
   "author": {
     "name": "Brent Lewis",
     "email": "brent.lewis08@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/blewis008/html-reorderify.git"
+    "url": "git://github.com/blewis008/grunt-html-reorderify.git"
   },
   "bugs": {
-    "url": "https://github.com/blewis008/html-reorderify/issues"
+    "url": "https://github.com/blewis008/grunt-html-reorderify/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/blewis008/html-reorderify/blob/master/LICENSE-MIT"
+      "url": "https://github.com/blewis008/grunt-html-reorderify/blob/master/LICENSE-MIT"
     }
   ],
   "engines": {
