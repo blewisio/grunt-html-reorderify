@@ -32,12 +32,14 @@ module.exports = function(grunt) {
     html_reorderify: {
       default: {
         options: {
-          left: ['id', 'class'],
+          left: ['id', 'class', 'rel', 'type', 'title', 'href'],
         },
         files: [{
           // src: ['**/*.html'],
-          src: ['test/acceptance/simple_two_attribute_swap.html'],
-          dest: 'test/actual/simple_two_attribute_swap.html',
+          src: ['test/acceptance/github_example.html'],
+          // src: ['test/acceptance/simple_two_attribute_swap.html'],
+          dest: 'test/actual/github_example.html',
+          // dest: 'test/actual/simple_two_attribute_swap.html',
         }],
       },
     },
