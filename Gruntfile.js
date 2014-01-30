@@ -33,6 +33,7 @@ module.exports = function(grunt) {
       default: {
         options: {
           first: ['id', 'class', 'rel', 'type', 'title', 'href'],
+          last: [],
         },
         files: [{
           // src: ['**/*.html'],
