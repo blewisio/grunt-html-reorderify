@@ -1,6 +1,6 @@
 /*
  * grunt-html-reorderify
- * https://github.com/blewis008/html-reorderify
+ * https://github.com/blewis008/grunt-html-reorderify
  *
  * Copyright (c) 2014 Brent Lewis
  * Licensed under the MIT license.
