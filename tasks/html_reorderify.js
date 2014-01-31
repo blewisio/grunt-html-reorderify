@@ -141,15 +141,15 @@ html_reorderify.rebuildElement = function(element, keyValuePairs) {
 };
 
 html_reorderify.buildSortableAttribute = function(keyValuePair, options, maxOrder) {
-  var foundIndex = options.first.indexOf(keyValuePair[0]);
   return {
             'name': keyValuePair[0],
             'value': keyValuePair[1],
-            'order': html_reorderify.getAttributeIndex(foundIndex, maxOrder, options)
+            'order': html_reorderify.getAttributeIndex(keyValuePair[0], maxOrder, options)
          };
 };
 
-html_reorderify.getAttributeIndex = function(foundIndex, maxOrder, options) {
+html_reorderify.getAttributeIndex = function(attributeName, maxOrder, options) {
+  var foundIndex = options.first.indexOf(attributeName);
   return foundIndex === -1 ? maxOrder : foundIndex;
 };
 

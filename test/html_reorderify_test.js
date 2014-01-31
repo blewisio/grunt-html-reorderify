@@ -221,11 +221,11 @@ exports.html_reorderify = {
   test_getAttributeIndex_simple: function(test) {
     test.expect(1);
 
-    var foundIndex = 1;
-    var options = {};
+    var attributeName = 'id';
+    var options = {first: ['id']};
     var maxOrder = 1;
-    var actual = html_reorderify.getAttributeIndex(foundIndex, options, maxOrder);
-    var expected = 1;
+    var actual = html_reorderify.getAttributeIndex(attributeName, maxOrder, options);
+    var expected = 0;
 
     test.equal(actual, expected, 'Should return the expected index');
     test.done();
