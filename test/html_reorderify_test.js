@@ -218,4 +218,16 @@ exports.html_reorderify = {
     test.deepEqual(actual, expected, 'Should work with equals sign in an attribute value');
     test.done();
   },
+  test_getAttributeIndex_simple: function(test) {
+    test.expect(1);
+
+    var foundIndex = 1;
+    var options = {};
+    var maxOrder = 1;
+    var actual = html_reorderify.getAttributeIndex(foundIndex, options, maxOrder);
+    var expected = 1;
+
+    test.equal(actual, expected, 'Should return the expected index');
+    test.done();
+  },
 };

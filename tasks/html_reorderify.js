@@ -145,8 +145,12 @@ html_reorderify.buildSortableAttribute = function(keyValuePair, options, maxOrde
   return {
             'name': keyValuePair[0],
             'value': keyValuePair[1],
-            'order': foundIndex === -1 ? maxOrder : foundIndex
+            'order': html_reorderify.getAttributeIndex(foundIndex, maxOrder, options)
          };
+};
+
+html_reorderify.getAttributeIndex = function(foundIndex, maxOrder, options) {
+  return foundIndex === -1 ? maxOrder : foundIndex;
 };
 
 html_reorderify.testFunction = function() {
