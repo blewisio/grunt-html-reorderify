@@ -149,8 +149,9 @@ html_reorderify.buildSortableAttribute = function(keyValuePair, options, maxOrde
 };
 
 html_reorderify.getAttributeIndex = function(attributeName, maxOrder, options) {
-  var foundIndex = options.first.indexOf(attributeName);
-  return foundIndex === -1 ? maxOrder : foundIndex;
+  var firstIndex = options.first ? options.first.indexOf(attributeName) : -1;
+  var lastIndex = options.last ? options.last.indexOf(attributeName) : -1;
+  return firstIndex === -1 ? maxOrder : firstIndex;
 };
 
 html_reorderify.testFunction = function() {

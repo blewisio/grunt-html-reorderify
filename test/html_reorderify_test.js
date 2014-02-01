@@ -230,4 +230,16 @@ exports.html_reorderify = {
     test.equal(actual, expected, 'Should return the expected index');
     test.done();
   },
+  test_getAttributeIndex_last_only: function(test) {
+    test.expect(1);
+
+    var attributeName = 'runat';
+    var options = {last: ['runat']};
+    var maxOrder = 3;
+    var actual = html_reorderify.getAttributeIndex(attributeName, maxOrder, options);
+    var expected = 3; 
+
+    test.equal(actual, expected, 'Should return last');
+    test.done();
+  },
 };
