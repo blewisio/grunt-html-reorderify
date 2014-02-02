@@ -151,7 +151,13 @@ html_reorderify.buildSortableAttribute = function(keyValuePair, options, maxOrde
 html_reorderify.getAttributeIndex = function(attributeName, maxOrder, options) {
   var firstIndex = options.first ? options.first.indexOf(attributeName) : -1;
   var lastIndex = options.last ? options.last.indexOf(attributeName) : -1;
-  return firstIndex === -1 ? maxOrder : firstIndex;
+  if (firstIndex !== -1) {
+    return firstIndex;
+  } else if (lastIndex !== -1) {
+    return maxOrder - lastIndex;
+  } else {
+    return maxOrder;
+  }
 };
 
 html_reorderify.testFunction = function() {
