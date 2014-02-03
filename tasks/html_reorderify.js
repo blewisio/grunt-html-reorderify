@@ -14,7 +14,7 @@ var html_reorderify = module.exports = function(grunt) {
     
     var options = this.options();
 
-    var src = this.files[0].orig.src[0];
+    var src = html_reorderify.getNextFile(this.files);
     if (grunt.file.exists(src)) {
       src = grunt.file.read(src);
       src = html_reorderify.reorderAttributes(src, options);
@@ -24,6 +24,10 @@ var html_reorderify = module.exports = function(grunt) {
       grunt.log.warn('File "' + src + '" does not exist.');
     }
   });
+};
+
+html_reorderify.getNextFile = function(files) {
+ return this.files[0].orig.src[0];
 };
 
 html_reorderify.reorderAttributes = function(src, options) {
