@@ -14,15 +14,18 @@ var html_reorderify = module.exports = function(grunt) {
     
     var options = this.options();
 
-    var src = html_reorderify.getNextFile(this.files);
-    if (grunt.file.exists(src)) {
-      src = grunt.file.read(src);
-      src = html_reorderify.reorderAttributes(src, options);
-      var dest = this.files[0].dest;
-      grunt.file.write(dest, src);
-    } else {
-      grunt.log.warn('File "' + src + '" does not exist.');
+    var files = html_reorderify.getNextFile(this.files);
+    for (file in files) {
+      if (grunt.file.exists(file)) {
+        var src = grunt.file.read(file);
+        src = html_reorderify.reorderAttributes(src, options);
+        var dest = this.files[0].dest;
+        grunt.file.write(dest, src);
+      } else {
+        grunt.log.warn('File "' + src + '" does not exist.');
+      }  
     }
+    
   });
 };
 
