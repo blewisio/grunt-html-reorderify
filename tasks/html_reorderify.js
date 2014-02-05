@@ -29,6 +29,15 @@ var html_reorderify = module.exports = function(grunt) {
   });
 };
 
+html_reorderify.fileExists = function(filepath) {
+  if (grunt.file.exists(filepath) {
+    return true;
+  } else {
+    grunt.log.warn('File "' + src + '" does not exist.');
+    return false;
+  }
+};
+
 html_reorderify.getNextFile = function(files) {
  return this.files[0].orig.src[0];
 };
