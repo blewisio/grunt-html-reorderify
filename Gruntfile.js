@@ -35,13 +35,14 @@ module.exports = function(grunt) {
           first: ['id', 'class', 'rel', 'type', 'title', 'href'],
           last: [],
         },
-        files: [{
-          // src: ['**/*.html'],
-          src: ['test/acceptance/github_example.html'],
-          // src: ['test/acceptance/simple_two_attribute_swap.html'],
-          dest: 'test/actual/github_example.html',
-          // dest: 'test/actual/simple_two_attribute_swap.html',
-        }],
+        files: [
+          {
+            expand: true,
+            src: ['test/*.html'],
+            dest: 'test/actual/',
+            ext: '.html',
+          },
+        ],
       },
     },
 

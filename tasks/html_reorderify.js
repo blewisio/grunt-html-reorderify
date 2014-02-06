@@ -10,30 +10,32 @@
 
 var html_reorderify = module.exports = function(grunt) {
   grunt.registerMultiTask('html_reorderify', 'Reorder HTML attributes such as id, class, or style into a standard order.', function() {
-    // debugger; // uncomment to debug via node-inspector
+    debugger; // uncomment to debug via node-inspector
     
     var options = this.options();
 
-    var files = html_reorderify.getNextFile(this.files);
-    for (file in files) {
-      if (grunt.file.exists(file)) {
+    var files = this.files;
+    files.forEach(function (file) {
+      // TODO: FILE.FILTER(FILEEXISTS).MAP(REORDERATTRIBUTES)
+      if (grunt.file.exists(file, grunt)) {
         var src = grunt.file.read(file);
         src = html_reorderify.reorderAttributes(src, options);
         var dest = this.files[0].dest;
         grunt.file.write(dest, src);
       } else {
-        grunt.log.warn('File "' + src + '" does not exist.');
-      }  
-    }
+        grunt.log.warn('File "' + file + '" does not exist.');
+      }
+    });
     
   });
 };
 
-html_reorderify.fileExists = function(filepath) {
-  if (grunt.file.exists(filepath) {
+
+html_reorderify.fileExists = function(filepath, grunt) {
+  if (grunt.file.exists(filepath)) {
     return true;
   } else {
-    grunt.log.warn('File "' + src + '" does not exist.');
+    grunt.log.warn('File "' + filepath + '" does not exist.');
     return false;
   }
 };
