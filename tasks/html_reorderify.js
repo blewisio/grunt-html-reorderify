@@ -14,19 +14,20 @@ var html_reorderify = module.exports = function(grunt) {
     
     var options = this.options();
 
-    var files = this.files;
-    files.forEach(function (file) {
+    var files = this.files,
+                i;
+    for (i = 0; i < files.length; i++) {
+      var file = files[i];
       // TODO: FILE.FILTER(FILEEXISTS).MAP(REORDERATTRIBUTES)
-      if (grunt.file.exists(file, grunt)) {
-        var src = grunt.file.read(file);
+      var filepath = file.src[0];
+      if (html_reorderify.fileExists(filepath, grunt)) {
+        var src = grunt.file.read(filepath);
         src = html_reorderify.reorderAttributes(src, options);
-        var dest = this.files[0].dest;
-        grunt.file.write(dest, src);
+        grunt.file.write(file.dest, src);
       } else {
         grunt.log.warn('File "' + file + '" does not exist.');
       }
-    });
-    
+    }
   });
 };
 
@@ -41,7 +42,7 @@ html_reorderify.fileExists = function(filepath, grunt) {
 };
 
 html_reorderify.getNextFile = function(files) {
- return this.files[0].orig.src[0];
+ return files[0].orig.src[0];
 };
 
 html_reorderify.reorderAttributes = function(src, options) {

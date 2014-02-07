@@ -37,8 +37,9 @@ module.exports = function(grunt) {
         },
         files: [
           {
+            cwd: 'test/acceptance/',
             expand: true,
-            src: ['test/*.html'],
+            src: ['**/*.html'],
             dest: 'test/actual/',
             ext: '.html',
           },
