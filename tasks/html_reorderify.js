@@ -10,7 +10,7 @@
 
 var html_reorderify = module.exports = function(grunt) {
   grunt.registerMultiTask('html_reorderify', 'Reorder HTML attributes such as id, class, or style into a standard order.', function() {
-    debugger; // uncomment to debug via node-inspector
+    // debugger; // uncomment to debug via node-inspector
     
     var options = this.options();
 
