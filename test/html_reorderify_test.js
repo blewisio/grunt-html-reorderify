@@ -40,15 +40,6 @@ exports.html_reorderify = {
   setUp: function(done) {
     done();
   },
-  test_test: function(test) {
-    test.expect(1);
-    
-    var actual = html_reorderify.testFunction();
-    var expected = 5;
-    
-    test.equal(actual, expected, 'Should describe an example test.');
-    test.done();
-  },
   test_getEachAttribute_single: function(test) {
     test.expect(1);
 

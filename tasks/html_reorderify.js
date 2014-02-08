@@ -170,7 +170,3 @@ html_reorderify.getAttributeIndex = function(attributeName, maxOrder, options) {
     return maxOrder;
   }
 };
-
-html_reorderify.testFunction = function() {
-  return 5;
-};
