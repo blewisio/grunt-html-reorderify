@@ -12,37 +12,29 @@ var html_reorderify = module.exports = function(grunt) {
   grunt.registerMultiTask('html_reorderify', 'Reorder HTML attributes such as id, class, or style into a standard order.', function() {
     // debugger; // uncomment to debug via node-inspector
     
-    var options = this.options();
-
-    var files = this.files,
-                i;
-    for (i = 0; i < files.length; i++) {
-      var file = files[i];
-      // TODO: FILE.FILTER(FILEEXISTS).MAP(REORDERATTRIBUTES)
-      var filepath = file.src[0];
-      if (html_reorderify.fileExists(filepath, grunt)) {
-        var src = grunt.file.read(filepath);
-        src = html_reorderify.reorderAttributes(src, options);
-        grunt.file.write(file.dest, src);
-      } else {
-        grunt.log.warn('File "' + file + '" does not exist.');
-      }
-    }
+    this.grunt = grunt;
+    var files = this.files;
+    var fileExists = html_reorderify.fileExists;
+    var reorderify = html_reorderify.reorderify;
+    files.filter(fileExists, this).map(reorderify, this);
   });
 };
 
-
-html_reorderify.fileExists = function(filepath, grunt) {
-  if (grunt.file.exists(filepath)) {
+html_reorderify.fileExists = function(file) {
+  var filepath = file.src[0];
+  if (this.grunt.file.exists(filepath)) {
     return true;
   } else {
-    grunt.log.warn('File "' + filepath + '" does not exist.');
+    this.grunt.log.warn('File "' + filepath + '" does not exist.');
     return false;
   }
 };
 
-html_reorderify.getNextFile = function(files) {
- return files[0].orig.src[0];
+html_reorderify.reorderify = function(file) {
+  var filepath = file.src[0];
+  var src = this.grunt.file.read(filepath);
+  src = html_reorderify.reorderAttributes(src, this.options());
+  this.grunt.file.write(file.dest, src);
 };
 
 html_reorderify.reorderAttributes = function(src, options) {
