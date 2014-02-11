@@ -228,9 +228,45 @@ exports.html_reorderify = {
     var options = {last: ['runat']};
     var maxOrder = 3;
     var actual = html_reorderify.getAttributeIndex(attributeName, maxOrder, options);
-    var expected = 3; 
+    var expected = 3;
 
     test.equal(actual, expected, 'Should return last');
+    test.done();
+  },
+  test_fileExists_exists: function(test) {
+    test.expect(1);
+
+    var shouldExist = true;
+    html_reorderify.grunt = {
+      file: {
+        exists: function() { return shouldExist; },
+      },
+      log: {
+        warn: function () { },
+      },
+    };
+    var file = { src: ['filepath'] };
+    var fileExists = html_reorderify.fileExists(file);
+
+    test.equal(fileExists, shouldExist, 'Should find file');
+    test.done();
+  },
+  test_fileExists_does_not_exist: function(test) {
+    test.expect(1);
+
+    var shouldExist = false;
+    html_reorderify.grunt = {
+      file: {
+        exists: function() { return shouldExist; },
+      },
+      log: {
+        warn: function () { },
+      },
+    };
+    var file = { src: ['filepath'] };
+    var fileExists = html_reorderify.fileExists(file);
+
+    test.equal(fileExists, shouldExist, 'Should not find file');
     test.done();
   },
 };
