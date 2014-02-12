@@ -44,13 +44,13 @@ grunt.initConfig({
 Type: `Array`
 Default value: `',  '`
 
-An array that is used to do something with whatever.
+An array that is used to specify the order of attributes to be moved to the beginning of an HTML element.
 
 #### options.last
 Type: `Array`
 Default value: `'.'`
 
-An array that is used to do something else with whatever else.
+An array that is used to specify the order of attributes to be moved to the end of an HTML element.
 
 ### Usage Examples
 
@@ -60,12 +60,20 @@ In this example, custom options are used to do something else with whatever else
 ```js
 grunt.initConfig({
   html_reorderify: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+    reorder: {
+      options: {
+        first: ['id', 'class', 'style'],
+        last: [],
+      },
+      files: [
+        {
+          expand: true,
+          cwd: 'test/acceptance/',
+          src: ['**/*.html'],
+          dest: 'test/actual/',
+          ext: '.html',
+        },
+      ],
     },
   },
 });
