@@ -1,26 +1,6 @@
 'use strict';
 
-// var grunt = require('grunt');
 var html_reorderify = require('../tasks/html_reorderify.js');
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
-
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
 
 function getExpectedAttributes(names, values, orders) {
   var attributes = [],
@@ -40,11 +20,47 @@ exports.html_reorderify = {
   setUp: function(done) {
     done();
   },
+  test_fileExists_exists: function(test) {
+    test.expect(1);
+
+    var shouldExist = true;
+    html_reorderify.grunt = {
+      file: {
+        exists: function() { return shouldExist; },
+      },
+      log: {
+        warn: function () { },
+      },
+    };
+    var file = { src: ['filepath'] };
+    var fileExists = html_reorderify.fileExists(file);
+
+    test.equal(fileExists, shouldExist, 'Should find file given the file exists');
+    test.done();
+  },
+  test_fileExists_does_not_exist: function(test) {
+    test.expect(1);
+
+    var shouldExist = false;
+    html_reorderify.grunt = {
+      file: {
+        exists: function() { return shouldExist; },
+      },
+      log: {
+        warn: function () { },
+      },
+    };
+    var file = { src: ['filepath'] };
+    var fileExists = html_reorderify.fileExists(file);
+
+    test.equal(fileExists, shouldExist, 'Should not find file given the file does not exist');
+    test.done();
+  },
   test_getEachAttribute_single: function(test) {
     test.expect(1);
 
     var options = {first: ['id']};
-    var attributes = ['id="testId"'];// class="testClass" style="display: none;"'
+    var attributes = ['id="testId"'];
     var actual = html_reorderify.getEachAttribute(attributes, options);
     var expected = [{name: 'id', value: '"testId"', order: 0}];
 
@@ -99,34 +115,34 @@ exports.html_reorderify = {
     test.equal(attributes.length, actual.length, 'Should output the same number of attributes as passed in');
     test.done();
   },
-  test_rebuildElement_single: function(test) {
+  test_rebuildElement: function(test) {
     test.expect(1);
 
     var attributes = getExpectedAttributes(['id'], ['"testId"'], [0]);
     var actual = html_reorderify.rebuildElement('div', attributes);
     var expected = 'div id="testId"';
 
-    test.equal(actual, expected, 'Should la dee da da skebop do wap');
+    test.equal(actual, expected, 'Should be able to rebuild html element given name and only one attribute');
     test.done();
   },
-  test_rebuildElement_double: function(test) {
+  test_rebuildElement2: function(test) {
     test.expect(1);
 
     var attributes = getExpectedAttributes(['id', 'class'], ['"testId"', '"testClass"'], [0, 1]);
     var actual = html_reorderify.rebuildElement('div', attributes);
     var expected = 'div id="testId" class="testClass"';
 
-    test.equal(actual, expected, 'Should should should should should');
+    test.equal(actual, expected, 'Should be able rebuild html element given name and two simple individual parts');
     test.done();
   },
-  test_rebuildElement_triple: function(test) {
+  test_rebuildElement3: function(test) {
     test.expect(1);
 
     var attributes = getExpectedAttributes(['id', 'class', 'style'], ['"testId"', '"testClass1 testClass2"', '"font-size: 1.25em;"'], [0, 1, 2]);
     var actual = html_reorderify.rebuildElement('span', attributes);
     var expected = 'span id="testId" class="testClass1 testClass2" style="font-size: 1.25em;"';
 
-    test.equal(actual, expected, 'Should should should should should');
+    test.equal(actual, expected, 'Should be able to rebuild html element given multiple complex individual parts');
     test.done();
   },
   test_sortAttributes: function(test) {
@@ -135,7 +151,7 @@ exports.html_reorderify = {
     var actual = html_reorderify.sortAttributes([{order: 3}, {order: 2}, {order: 0}, {order: 1}]);
     var expected = [{order: 0}, {order: 1}, {order: 2}, {order: 3}];
 
-    test.deepEqual(actual, expected, 'Should sort correctly...');
+    test.deepEqual(actual, expected, 'Should sort correctly by ascending order given an unordered array');
     test.done();
   },
   test_buildSortableAttribute: function(test) {
@@ -146,7 +162,7 @@ exports.html_reorderify = {
     var actual = html_reorderify.buildSortableAttribute(['class', '"testClass"'], options, maxOrder);
     var expected = {name: 'class', value: '"testClass"', order: maxOrder};
 
-    test.deepEqual(actual, expected, 'Should build correctly am I right');
+    test.deepEqual(actual, expected, 'Should build a sortable attribute given a simple attribute key value pair');
     test.done();
   },
   test_getAttributesFromElement_single: function(test) {
@@ -156,7 +172,7 @@ exports.html_reorderify = {
     var actual = html_reorderify.getAttributesFromElement(element);
     var expected = ['class="testClass"'];
 
-    test.deepEqual(actual, expected, 'Should be deep equal');
+    test.deepEqual(actual, expected, 'Should be able to split attributes given only one attribute');
     test.done();
   },
   test_getAttributesFromElement_simple: function(test) {
@@ -166,7 +182,7 @@ exports.html_reorderify = {
     var actual = html_reorderify.getAttributesFromElement(element);
     var expected = ['id="testId"', 'class="testClass"'];
 
-    test.deepEqual(actual, expected, 'Should be deep equal');
+    test.deepEqual(actual, expected, 'Should be able to split into individual parts given two simple attributes');
     test.done();
   },
   test_getAttributesFromElement_with_spaces: function(test) {
@@ -176,7 +192,7 @@ exports.html_reorderify = {
     var actual = html_reorderify.getAttributesFromElement(element);
     var expected = ['id="testId"', 'class="testClass1 testClass2"'];
 
-    test.deepEqual(actual, expected, 'Should still be deep equal');
+    test.deepEqual(actual, expected, 'Should be able to split attributes given attributes with spaces in the value part');
     test.done();
   },
   test_getAttributesFromElement_complex: function(test) {
@@ -186,7 +202,7 @@ exports.html_reorderify = {
     var actual = html_reorderify.getAttributesFromElement(element);
     var expected = ['id="testId"', 'class="testClass1 testClass2 testClass3"', 'style="margin-left: 0; margin-right: 0;"'];
 
-    test.deepEqual(actual, expected, 'Should still be deep equal 2');
+    test.deepEqual(actual, expected, 'Should be able to split into individual elements given multiple complex attributes');
     test.done();
   },
   test_getAttributesFromElement_trailingSpace: function(test) {
@@ -196,7 +212,7 @@ exports.html_reorderify = {
     var actual = html_reorderify.getAttributesFromElement(element);
     var expected = ['id="testId"', 'class="testClass1 testClass2"', 'style="margin-left: 0;"'];
 
-    test.deepEqual(actual, expected, 'Should');
+    test.deepEqual(actual, expected, 'Should be able to get attributes given an element with trailing spaces');
     test.done();
   },
   test_getAttributesFromElement_equalsInMiddle: function(test) {
@@ -218,7 +234,7 @@ exports.html_reorderify = {
     var actual = html_reorderify.getAttributeIndex(attributeName, maxOrder, options);
     var expected = 0;
 
-    test.equal(actual, expected, 'Should return the expected index');
+    test.equal(actual, expected, 'Should return the expected index of 0 given matching first attribute');
     test.done();
   },
   test_getAttributeIndex_last_only: function(test) {
@@ -230,43 +246,27 @@ exports.html_reorderify = {
     var actual = html_reorderify.getAttributeIndex(attributeName, maxOrder, options);
     var expected = 3;
 
-    test.equal(actual, expected, 'Should return last');
-    test.done();
-  },
-  test_fileExists_exists: function(test) {
-    test.expect(1);
-
-    var shouldExist = true;
-    html_reorderify.grunt = {
-      file: {
-        exists: function() { return shouldExist; },
-      },
-      log: {
-        warn: function () { },
-      },
-    };
-    var file = { src: ['filepath'] };
-    var fileExists = html_reorderify.fileExists(file);
-
-    test.equal(fileExists, shouldExist, 'Should find file');
-    test.done();
-  },
-  test_fileExists_does_not_exist: function(test) {
-    test.expect(1);
-
-    var shouldExist = false;
-    html_reorderify.grunt = {
-      file: {
-        exists: function() { return shouldExist; },
-      },
-      log: {
-        warn: function () { },
-      },
-    };
-    var file = { src: ['filepath'] };
-    var fileExists = html_reorderify.fileExists(file);
-
-    test.equal(fileExists, shouldExist, 'Should not find file');
+    test.equal(actual, expected, 'Should return last index given a matching last attribute');
     test.done();
   },
 };
+
+/*
+  ======== A Handy Little Nodeunit Reference ========
+  https://github.com/caolan/nodeunit
+
+  Test methods:
+    test.expect(numAssertions)
+    test.done()
+  Test assertions:
+    test.ok(value, [message])
+    test.equal(actual, expected, [message])
+    test.notEqual(actual, expected, [message])
+    test.deepEqual(actual, expected, [message])
+    test.notDeepEqual(actual, expected, [message])
+    test.strictEqual(actual, expected, [message])
+    test.notStrictEqual(actual, expected, [message])
+    test.throws(block, [error], [message])
+    test.doesNotThrow(block, [error], [message])
+    test.ifError(value)
+*/
