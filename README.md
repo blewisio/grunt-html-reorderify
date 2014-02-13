@@ -54,8 +54,8 @@ An array that is used to specify the order of attributes to be moved to the end 
 
 ### Usage Examples
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+#### Visual consistency
+In this example, a tag written as `<div class="content-list-item" id="firstItem" style="display: inline-block;">` would become `<div id="firstItem" class="content-list-item"  style="display: inline-block;">`. A tag such as `<div>` or `<a href="index.html">` would be unaffected, containing none of the specified attributes in the options. The goal of this plugin is to create visual consistency for HTML files, making scanning easier.
 
 ```js
 grunt.initConfig({
