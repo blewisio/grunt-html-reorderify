@@ -249,6 +249,17 @@ exports.html_reorderify = {
     test.equal(actual, expected, 'Should return last index given a matching last attribute');
     test.done();
   },
+  test_reorderAttributes: function(test) {
+    test.expect(1);
+
+    var options = {first: ['id'], last: ['runat']};
+    var element = '<uc:UserControl runat="server" id="uc1"/>';
+    var actual = html_reorderify.reorderAttributes(element, options);
+    var expected = '<uc:UserControl id="uc1" runat="server"/>';
+
+    test.equal(actual, expected, 'Should handle poorly formed self-closing tags');
+    test.done();
+  }
 };
 
 /*
