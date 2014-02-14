@@ -50,9 +50,13 @@ html_reorderify.reorderAttributes = function(src, options) {
     } else if (tagEndIndex === null) {
       if (src[i] === '>') {
         tagEndIndex = i;
-        if (src[i-1] === '/' && src[i-2] === ' ') {
-          tagEndIndex -= 2;
-        }
+        if (src[i-1] === '/') {
+          if (src[i-2] === ' ') {
+            tagEndIndex -= 2;
+          } else if (src[i-2] === '"') {
+            tagEndIndex -= 1;
+          }
+        } 
       }
     } else {
       var originalElement = src.substring(tagBeginIndex + 1, tagEndIndex);
