@@ -2,6 +2,9 @@
 
 > Reorder HTML attributes such as id, class, or style into a standard order.
 
+## Introduction
+This plugin is currently in beta, please open issues as needed for bugs found. Take care when using this plugin - it has not been tested in a production environment.
+
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
 
@@ -84,4 +87,4 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
-* v0.1.0 - In development
+* v0.1.0 - Beta release
