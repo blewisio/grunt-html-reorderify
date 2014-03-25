@@ -45,13 +45,13 @@ grunt.initConfig({
 
 #### options.first
 Type: `Array`
-Default value: `',  '`
+Suggested values: `'id, class, data-bind'`
 
 An array that is used to specify the order of attributes to be moved to the beginning of an HTML element.
 
 #### options.last
 Type: `Array`
-Default value: `'.'`
+Suggested values: `'runat, style'`
 
 An array that is used to specify the order of attributes to be moved to the end of an HTML element.
 
