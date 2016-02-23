@@ -1,7 +1,7 @@
 {
   "name": "grunt-html-reorderify",
   "description": "Reorder HTML attributes such as id, class, or style into a standard order.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/blewis008/grunt-html-reorderify",
   "author": {
     "name": "Brent Lewis",
